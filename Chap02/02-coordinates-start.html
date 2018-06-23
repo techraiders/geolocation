@@ -72,7 +72,9 @@
                 statusMessage('HTML5 Geolocation is not supported.')
             }
             geo.watchPosition(show_coords, geo_error, {
-                timeout: 0
+                maximumAge: 1000, // 1000 milisecond for 1 second, How long a cached position should live, before it gets/ refreshes the new position.
+                timeout: 30000, // common timeout is 5 minutes, 30000 milliseconds
+                enableHighAccuracy: true // It does default to false, it is especially important to be true for mobile devices otherwise your mobile will not turn on the GPS, so it doesn't guess the location from mobile towers and Wi-Fi(s) and retrieves postion using GPS.
             });
         }
 
