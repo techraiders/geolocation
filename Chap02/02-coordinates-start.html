@@ -32,6 +32,13 @@
             }
         }
 
+        function show_coords (position) {
+            var lat = position.coords.latitude,
+                lon = position.coords.longitude;
+                t.updateRow(0, [lat, lon]);
+                dispResults();
+        }
+
         function dispResults() {
             element('results').innerHTML = t.getTableHTML();
         }
@@ -44,7 +51,7 @@
             } else {
                 statusMessage('HTML5 Geolocation is not supported.')
             }
-            dispResults();
+            geo.getCurrentPosition(show_coords);
         }
 
         window.onload = function() {
