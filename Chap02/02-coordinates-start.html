@@ -71,7 +71,9 @@
             } else {
                 statusMessage('HTML5 Geolocation is not supported.')
             }
-            geo.getCurrentPosition(show_coords, geo_error);
+            geo.watchPosition(show_coords, geo_error, {
+                timeout: 0
+            });
         }
 
         window.onload = function() {
