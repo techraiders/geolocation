@@ -2,7 +2,7 @@
 <html>
 
 <!-- 
-    errorhandling.html by Bill Weinman 
+    coordinates.html by Bill Weinman 
     <http://bw.org/contact/>
     created 2011-06-15
     updated 2011-07-20
@@ -17,8 +17,8 @@
     <title>
         HTML5 Geolocation
     </title>
-    <link rel="stylesheet" type="text/css" href="../CSS/main.css" />
-    <script type="text/javascript" src="../Javascript/bwH5.js"></script>
+    <link rel="stylesheet" type="text/css" href="CSS/main.css" />
+    <script type="text/javascript" src="Javascript/bwH5.js"></script>
     <script type="text/javascript">
         var t = new bwTable();
         var geo;
@@ -32,26 +32,30 @@
             }
         }
 
-        function show_coords(position) {
-            var lat = position.coords.latitude;
-            var lon = position.coords.longitude;
-            t.updateRow(0, [ lat.toString(), lon.toString() ] );
-            dispResults();
+        function show_coords (position) {
+            var lat = position.coords.latitude,
+                lon = position.coords.longitude;
+                t.updateRow(0, [lat, lon]);
+                dispResults();
         }
 
-        function geo_error(error) {
+        function geo_error (error) {
             switch(error.code) {
-                case error.TIMEOUT:
+                case error.TIMEOUT: {
                     alert('Geolocation Timeout');
                     break;
-                case error.POSITION_UNAVAILABLE:
-                    alert('Geolocation Position unavailable');
+                }
+                case error.POSITION_UNAVAILABLE: {
+                    alert('Geolocation Position Unavailable');
                     break;
-                case error.PERMISSION_DENIED:
-                    alert('Geolocation Permission denied');
+                }
+                case error.PERMISSION_DENIED: {
+                    alert('Geolocation Permission Denied');
                     break;
-                default:
-                    alert('Geolocation returned an unknown error code: ' + error.code);
+                }
+                default: {
+                    alert('Geolocation returned an unknown error code ' + error.code);
+                }
             }
         }
 
@@ -67,7 +71,11 @@
             } else {
                 statusMessage('HTML5 Geolocation is not supported.')
             }
-            geo.getCurrentPosition(show_coords, geo_error);
+            geo.watchPosition(show_coords, geo_error, {
+                maximumAge: 1000, // 1000 milisecond for 1 second, How long a cached position should live, before it gets/ refreshes the new position.
+                timeout: 30000, // common timeout is 5 minutes, 30000 milliseconds
+                enableHighAccuracy: true // It does default to false, it is especially important to be true for mobile devices otherwise your mobile will not turn on the GPS, so it doesn't guess the location from mobile towers and Wi-Fi(s) and retrieves postion using GPS.
+            });
         }
 
         window.onload = function() {
