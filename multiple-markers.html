@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    html, body {
+      font-family: Arial, sans-serif;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    #map {
+      height: 100%;
+    }
+  </style>
+</head>
+  <body>
+    <div id="map"></div>
+    <script>
+      var map;
+      var markers = [];
+      function initMap () {
+          // Constructor creates a new map - only center and zoom are required
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: 40.7413549, lng: -73.9980244},
+            zoom: 13
+        });
+
+        // These are the real estate listing that will be shown to the user, Normally we'd have these in a database instead.
+        var locations = [
+          {title: 'Park Ave Penthouse', location: {lat: 40.7713024, lng: -73.9949465}},
+          {title: 'Chelsea', location: {lat: 40.7444883, lng: -73.9949465}},
+          {title: 'Union Square Open Floor Plan', location: {lat: 40.7347062, lng: -73.9895759}},
+          {title: 'East Village Hip Studio', location: {lat: 40.7281777, lng: -73.984377}}
+          
+        ];
+
+        var largeInfowindow = new google.maps.InfoWindow();
+        var bounds = new google.maps.LatLngBounds();
+      
+        // The following group uses the location array to create an array of matkers on initialize.
+        for (var i = 0; i < locations.length; i++) {
+         // Get the position from the location array.
+         var position = locations[i].location;
+         var title = locations[i].title;
+
+         // Create a marker per location, and put into markers array.
+         
+          // There are bunch of things we can specify, We can make it draggable, so that when it appears, the user can move around, We could specify an animations so that it doesn't just appear on the maps, it drops, for example, let's test this out.
+          var marker = new google.maps.Marker({
+            map: map,
+            position: position,
+            title: title,
+            animation: google.maps.Animation.DROP,
+            id: i
+          });
+
+          // push the marker to our array of markers
+          markers.push(marker);
+
+          // Extents the boundaries of the map for each marker
+          bounds.extend(marker.position);
+          
+          // Create an onClick event to open an infowindow at each marker
+          marker.addListener('click', function () {
+            populateInfoWindow(this, largeInfowindow);
+          });
+        } // end of for
+
+        map.fitBounds(bounds);
+      } // end of initMap
+
+      // This function populates the infowindow when the marker is clicked. We'll only allow one infowindow which will open at the marker that is clicked, and populate based on that markers position.
+      function populateInfoWindow(marker, infowindow) {
+
+          // Check to make sure the infowindow is not already opened on this marker.
+        if (infowindow.marker != marker) {
+          infowindow.marker = marker;
+          infowindow.setContent('<div>' + marker.title + '</div>');
+          infowindow.open(map, marker);
+          // Make sure the marker property is cleared if the infowindow is closed.
+          infowindow.addEventListener('closeclick', function () {
+            infowindow.setMarker(null);
+          });
+        }
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUVSTmPY06xviuflAx0iy7M7JncGecTNs&v=3&callback=initMap" async defer></script>
+  </body>
+</html>
