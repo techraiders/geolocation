@@ -1,0 +1,25 @@
+{
+  "name": "geolocation",
+  "version": "1.0.0",
+  "description": "Demo project for the tracker app",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "live-server": "^1.2.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node node_modules/live-server/live-server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/techraiders/geolocation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/techraiders/geolocation/issues"
+  },
+  "homepage": "https://github.com/techraiders/geolocation#readme"
+}
