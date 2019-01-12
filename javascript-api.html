@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>JavaScript API</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-      html, body {
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>JavaScript API</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      html,
+      body {
         font-family: Arial, sans-serif;
         height: 100%;
         margin: 0;
@@ -16,39 +17,43 @@
         height: 100%;
       }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div id="map"></div>
 
     <script>
       var map;
-      function initMap () {
+      function initMap() {
         // Constructor creates a new map - only center and zoom are required
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 40.7413549, lng: -73.9980244},
+        map = new google.maps.Map(document.getElementById("map"), {
+          center: { lat: 40.7413549, lng: -73.9980244 },
           zoom: 13
         });
 
-        var tribeca = {lat: 40.719526, lng: -74.0089934}; // position to be marked
+        var tribeca = { lat: 40.719526, lng: -74.0089934 }; // position to be marked
 
         // There are bunch of things we can specify, We can make it draggable, so that when it appears, the user can move around, We could specify an animations so that it doesn't just appear on the maps, it drops, for example, let's test this out.
         var marker = new google.maps.Marker({
           position: tribeca, // Markers need to know where it should appear
           map: map, // All the marker needs to know which is the map it should appear on
-          title: 'First Marker!'
+          title: "First Marker!"
         });
 
         var infoWindow = new google.maps.InfoWindow({
-          content: 'Do you ever feel like an InforWindow, floating through the wind, ready to start again?' 
+          content:
+            "Do you ever feel like an InforWindow, floating through the wind, ready to start again?"
         });
 
-        marker.addListener('click', function () {
+        marker.addListener("click", function() {
           infoWindow.open(map, marker); // 2nd argument marker is optional, if we didn't pass the marker, we would need to give the infoWindow a position property so that it has a place to open.
         });
-
       }
     </script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUVSTmPY06xviuflAx0iy7M7JncGecTNs&v=3&callback=initMap" async defer></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBWzhKouh-Nbk1jBJF2LqB8YPEYwZ20kPA&v=3&callback=initMap"
+      async
+      defer
+    ></script>
   </body>
 </html>
